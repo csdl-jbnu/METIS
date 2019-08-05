@@ -35,7 +35,7 @@ reference
 ## Online Portal
 
 [![](https://img.shields.io/website-up-down-green-red/https/shields.io.svg?label=METIS)](http://METIS-dna-origami.org)<br>
-[```http://metis-dna-origami.org/```](http://metis-dna-origami.org/)
+[```https://metis-dna-origami.org/```](http://metis-dna-origami.org/)
 
 In addition to the source code and pre-compiled binaries available here, we also offer an online web application with all the functionality found in the downloaded version. By submitting the same inputs (PLY, GEO, IGS, or SVG input CAD files), the web service will return the same file output as the downloaded version.
 
@@ -68,7 +68,7 @@ In addition to the source code and pre-compiled binaries available here, we also
 ## Copyrights
 
 *Author*<br>
-Dr. Hyungmin Jun ( [Personal web](http://hyungminjun.com) | [e-mail](mailto:hyungminjun@outlook.com) )
+Dr. Hyungmin Jun @LCBB, MIT
 
 *License*<br>
 METIS is an open-source software distributed under the [GPL license, version 3](https://www.gnu.org/licenses/gpl-3.0.en.html/)
