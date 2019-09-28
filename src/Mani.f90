@@ -57,6 +57,7 @@ module Mani
     public Mani_Copy_BaseType
     public Mani_Go_Start_Base
     public Mani_Go_Base
+    public Main_Shuffle
 
 contains
 
@@ -562,6 +563,27 @@ function Mani_Go_Base(dna, strand, n) result(base)
         base = dna.top(base).up
     end do
 end function Mani_Go_Base
+
+! -----------------------------------------------------------------------------
+
+! Shuffle the array
+subroutine Main_Shuffle(a)
+    integer, intent(inout) :: a(:)
+
+    integer, dimension (1) :: seed = (/7/)
+    integer :: i, randpos, temp
+    real :: r
+
+    call RANDOM_SEED(put=seed)
+
+    do i = size(a), 2, -1
+        call random_number(r)
+        randpos    = int(r * i) + 1
+        temp       = a(randpos)
+        a(randpos) = a(i)
+        a(i)       = temp
+    end do
+end subroutine Main_Shuffle
 
 ! ---------------------------------------------------------------------------
 

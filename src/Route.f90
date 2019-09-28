@@ -1977,7 +1977,8 @@ subroutine Route_Modify_Scaf_Xover(geom, mesh, dna)
 
     type(CheckType), allocatable :: check(:)
 
-    integer :: i, j, count, strd_cur, strd_com, n_xover1, n_xover2
+    integer, allocatable :: rand_int(:)
+    integer :: i, j, ii, count, strd_cur, strd_com, n_xover1, n_xover2
     integer :: base, up_base, dn_base, xover, up_xover, dn_xover
     logical :: b_delete, b_skip
 
@@ -2007,10 +2008,36 @@ subroutine Route_Modify_Scaf_Xover(geom, mesh, dna)
     n_xover2 = dna.n_xover_scaf
     allocate(check(dna.n_xover_scaf))
 
+    ! --------------------------------------------------
+    ! Shuffle the iteration of the loop
+    ! --------------------------------------------------
+    allocate(rand_int(dna.n_base_scaf))
+    do i = 1, dna.n_base_scaf
+        rand_int(i) = i
+    end do
+    call Main_Shuffle(rand_int)
+
     count = 0
     do i = 1, dna.n_base_scaf
 
-        base  = dna.base_scaf(i).id
+        ! HM - updated for METIS, completed
+        ! ==================================================
+        ! Shuffled interation to assign scaffold crossovers seperately for
+        ! the one polygon without any internal mesh
+        ! This is only for METIS
+
+        if(geom.n_face == 1) then
+
+            ! This is to avoid existing scaffold double-crossovers in one edge
+            ii = rand_int(i)
+        else
+
+            ! This is normal positioning for scaffold double-crossovers
+            ii = i
+        end if
+        ! ==================================================
+
+        base  = dna.base_scaf(ii).id
         xover = dna.base_scaf(base).xover
 
         up_base  = dna.base_scaf(base).up
@@ -2087,6 +2114,7 @@ subroutine Route_Modify_Scaf_Xover(geom, mesh, dna)
 
     ! Deallocate memory
     deallocate(check)
+    deallocate(rand_int)
 
     ! Print information
     write(p_redir, "(a)"), "   * # of deleted self connecting Xovers    : "&
